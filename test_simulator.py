@@ -62,8 +62,18 @@ class TestSimulator(TestCase):
         w4 = sim4.world
         w4.set(midx, midy, 1)
 
-        self.assertEqual(np.sum(sim1.update().world), 0)
+        self.assertEqual(np.sum(sim4.update().world), 0)
 
+        """ Check with more than three neighbours, with new rules """
+        sim5 = Simulator(birth=birth, survival=survival)
+        w5 = sim5.world
+
+        ## Set all cells to alive
+        for y in range(0, w5.height):
+            for x in range(0, w5.width):
+                w5.set(x, y, 1)
+
+        self.assertLess(np.sum(sim5.update().world), 4)
 
 
 
