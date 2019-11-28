@@ -40,6 +40,8 @@ class Simulator:
                     next_generation.set(x, y, 0)
                 elif cell_alive and neighbours > 3:
                     next_generation.set(x, y, 0)
+                elif not cell_alive and neighbours == 3:
+                    next_generation.set(x, y, 1)
                 else:
                     next_generation.set(x, y, cell_alive)
 

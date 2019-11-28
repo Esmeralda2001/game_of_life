@@ -37,6 +37,22 @@ class TestSimulator(TestCase):
 
         self.assertLess(np.sum(sim2.update().world), 4)
 
+        """ Ressurect the cell if it has exactly three neighbours and was previously dead  """
+        sim3 = Simulator()
+        w3 = sim3.world
+
+        midX = w3.width // 2
+        midY = w3.height // 2
+
+        w3.set(midX - 1, midY + 1, 1)
+        w3.set(midX - 1, midY - 1, 1)
+        w3.set(midX - 1, midY, 1)
+        w3.set(midX - 1, midY + 2, 1)
+
+        # print(w3)
+        new_world = sim3.update()
+        self.assertGreater(np.sum(new_world.world), 3)
+
 
     def test_get_generation(self):
         """
