@@ -53,6 +53,19 @@ class TestSimulator(TestCase):
         new_world = sim3.update()
         self.assertGreater(np.sum(new_world.world), 3)
 
+        """PART 2"""
+        birth = [3, 6]
+        survival = [2, 3]
+
+        """ Check with less than two neighbours, with new rules """
+        sim4 = Simulator(birth=birth, survival=survival)
+        w4 = sim4.world
+        w4.set(midx, midy, 1)
+
+        self.assertEqual(np.sum(sim1.update().world), 0)
+
+
+
 
     def test_get_generation(self):
         """

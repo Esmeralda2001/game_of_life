@@ -7,13 +7,16 @@ class Simulator:
     Read https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life for an introduction to Conway's Game of Life.
     """
 
-    def __init__(self, world = None):
+    def __init__(self, world = None, birth = [3], survival = [2, 3]):
         """
         Constructor for Game of Life simulator.
 
         :param world: (optional) environment used to simulate Game of Life.
         """
         self.generation = 0
+        self.birth = birth
+        self.survival = survival
+
         if world == None:
             self.world = World(20)
         else:
@@ -28,6 +31,8 @@ class Simulator:
         self.generation += 1
 
         #TODO: Do something to evolve the generation
+        birth = self.birth
+        survival = self.survival
 
         next_generation = World(self.world.width, self.world.height)
         for y in range(self.world.height):
@@ -36,7 +41,7 @@ class Simulator:
                 neighbours = sum(self.world.get_neighbours(x, y))
 
                 # Cell dies if it has less than 2 neighbours
-                if cell_alive and neighbours < 2:
+                if cell_alive and neighbours not in survival:
                     next_generation.set(x, y, 0)
                 elif cell_alive and neighbours > 3:
                     next_generation.set(x, y, 0)
