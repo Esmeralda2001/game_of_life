@@ -26,6 +26,17 @@ class TestSimulator(TestCase):
 
         self.assertEqual(np.sum(sim1.update().world), 0)
 
+        """ Check with more than three neighbours """
+        sim2 = Simulator()
+        w2 = sim2.world
+
+        ## Set all cells to alive
+        for y in range(0, w2.height):
+            for x in range(0, w2.width):
+                w2.set(x, y, 1)
+
+        self.assertLess(np.sum(sim2.update().world), 4)
+
 
     def test_get_generation(self):
         """
