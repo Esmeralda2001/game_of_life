@@ -43,7 +43,7 @@ class Simulator:
                 # Cell dies if it has less than 2 neighbours
                 if cell_alive and neighbours not in survival:
                     next_generation.set(x, y, 0)
-                elif not cell_alive and neighbours == 3:
+                elif not cell_alive and neighbours in birth:
                     next_generation.set(x, y, 1)
                 else:
                     next_generation.set(x, y, cell_alive)

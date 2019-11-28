@@ -75,6 +75,23 @@ class TestSimulator(TestCase):
 
         self.assertLess(np.sum(sim5.update().world), 4)
 
+        """ Ressurect the cell if it has 6 neighbours  """
+        sim6 = Simulator(birth=birth, survival=survival)
+        w6 = sim6.world
+
+        midX = w6.width // 2
+        midY = w6.height // 2
+
+        w6.set(midX - 1, midY + 1, 1)
+        w6.set(midX - 1, midY - 1, 1)
+        w6.set(midX - 1, midY, 1)
+        w6.set(midX, midY + 1, 1)
+        w6.set(midX, midY - 1, 1)
+        w6.set(midX + 1, midY, 1)
+
+        new_world = sim6.update()
+        self.assertGreater(np.sum(new_world.world), 6)
+
 
 
     def test_get_generation(self):
