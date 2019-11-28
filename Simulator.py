@@ -1,4 +1,5 @@
 from World import *
+import numpy as np
 
 class Simulator:
     """
@@ -28,6 +29,22 @@ class Simulator:
 
         #TODO: Do something to evolve the generation
 
+        next_generation = World(self.world.width, self.world.height)
+        for y in range(self.world.height):
+            for x in range(self.world.width):
+                cell_alive = self.world.get(x, y)
+                neighbours = sum(self.world.get_neighbours(x, y))
+
+                # Cell dies if it has less than 2 neighbours
+                if cell_alive and neighbours < 2:
+                    next_generation.set(x, y, 0)
+                else:
+                    next_generation.set(x, y, cell_alive)
+
+
+        self.set_world(next_generation)
+
+
         return self.world
 
     def get_generation(self):
@@ -54,3 +71,4 @@ class Simulator:
 
         """
         self.world = world
+

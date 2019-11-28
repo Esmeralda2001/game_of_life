@@ -1,5 +1,6 @@
 from unittest import TestCase
 from Simulator import *
+import numpy as np
 
 
 class TestSimulator(TestCase):
@@ -13,7 +14,18 @@ class TestSimulator(TestCase):
         """
         Tests that the update functions returns an object of World type.
         """
-        self.assertIsInstance(self.sim.update(), World)
+        world = self.sim.world
+
+        midx = world.width // 2
+        midy = world.height // 2
+
+        """ Check with less than two neighbours """
+        sim1 = Simulator()
+        w1 = sim1.world
+        w1.set(midx, midy, 1)
+
+        self.assertEqual(np.sum(sim1.update().world), 0)
+
 
     def test_get_generation(self):
         """
