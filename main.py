@@ -7,7 +7,18 @@ VISUALISATION=True
 
 if __name__ == "__main__":
     w = World(110)
-    sim = Simulator(w)
+    birth = [3, 6]
+    survival = [2, 3]
+
+    midX = w.width // 2
+    midY = w.height // 2
+
+    w.set(midX - 1, midY, 5)
+    w.set(midX + 1, midY, 5)
+    w.set(midX - 1, midY - 1, 5)
+
+    sim = Simulator(w, birth, survival, age=6)
+
 
     if VISUALISATION:
         vis = Visualisation(sim)
