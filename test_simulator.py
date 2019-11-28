@@ -16,13 +16,13 @@ class TestSimulator(TestCase):
         """
         world = self.sim.world
 
-        midx = world.width // 2
-        midy = world.height // 2
+        midX = world.width // 2
+        midY = world.height // 2
 
         """ Check with less than two neighbours """
         sim1 = Simulator()
         w1 = sim1.world
-        w1.set(midx, midy, 1)
+        w1.set(midX, midY, 1)
 
         self.assertEqual(np.sum(sim1.update().world), 0)
 
@@ -41,8 +41,6 @@ class TestSimulator(TestCase):
         sim3 = Simulator()
         w3 = sim3.world
 
-        midX = w3.width // 2
-        midY = w3.height // 2
 
         w3.set(midX - 1, midY + 1, 1)
         w3.set(midX - 1, midY - 1, 1)
@@ -53,14 +51,14 @@ class TestSimulator(TestCase):
         new_world = sim3.update()
         self.assertGreater(np.sum(new_world.world), 3)
 
-        """PART 2"""
+        """ PART 2 """
         birth = [3, 6]
         survival = [2, 3]
 
         """ Check with less than two neighbours, with new rules """
         sim4 = Simulator(birth=birth, survival=survival)
         w4 = sim4.world
-        w4.set(midx, midy, 1)
+        w4.set(midX, midY, 1)
 
         self.assertEqual(np.sum(sim4.update().world), 0)
 
@@ -92,6 +90,30 @@ class TestSimulator(TestCase):
         new_world = sim6.update()
         self.assertGreater(np.sum(new_world.world), 6)
 
+        """ PART 3 """
+        """ Check with less than two neighbours """
+        sim7 = Simulator(age=6)
+        w7 = sim7.world
+        w7.set(midX, midY, 6)
+        sim7.update()
+
+        self.assertEqual(sim7.world.get(midX, midY), 5)
+
+        """ Ressurect the cell if it has exactly three neighbours and has an age between 2-4  """
+        sim8 = Simulator(age=6)
+        w8 = sim8.world
+
+        w8.set(midX - 1, midY, 5)
+        w8.set(midX + 1, midY, 5)
+        w8.set(midX - 1, midY - 1, 5)
+
+        neighbours = w8.get_neighbours(midX - 1, midY)
+
+        new_world = sim8.update()
+        new_neighbours = new_world.get_neighbours(midX - 1, midY + 1)
+
+        print(len([n for n in new_neighbours if n > 0]), len([n for n in neighbours if n > 0]))
+        self.assertGreater(len([n for n in new_neighbours if n > 0]), len([n for n in neighbours if n > 0]))
 
 
     def test_get_generation(self):
